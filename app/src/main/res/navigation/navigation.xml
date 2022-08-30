@@ -9,5 +9,15 @@
         android:id="@+id/enterFragment"
         android:name="com.example.maps_example.ui.fragments.enter.EnterFragment"
         android:label="EnterFragment"
-        tools:layout="@layout/fragment_enter" />
+        tools:layout="@layout/fragment_enter">
+        <action
+            android:id="@+id/navigateToMap"
+            app:destination="@id/mapFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.maps_example.ui.fragments.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map" />
 </navigation>

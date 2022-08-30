@@ -8,10 +8,10 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.closestDI
-import org.kodein.di.subDI
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.maps_example.utils.Screens
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment<BINDING : ViewDataBinding>(@LayoutRes private val layoutResId: Int) : Fragment() {
 
@@ -22,11 +22,28 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(@LayoutRes private val la
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding?.lifecycleOwner = this.viewLifecycleOwner
+        lifecycleScope.launch {
+            receiveScreen(viewModel.screenChannel.receive())
+        }
         return binding?.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    private fun navigate(destination: Screens) {
+        runCatching {
+            if (destination.navDirections != null) {
+                findNavController().navigate(destination.navDirections!!)
+                return
+            }
+            findNavController().navigate(destination.screenId)
+        }
+    }
+
+    private fun receiveScreen(screen: Screens?) {
+        navigate(screen ?: return)
     }
 }
