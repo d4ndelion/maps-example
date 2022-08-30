@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">maps-example</string>
+
+    <!-- EnterFragment -->
+    <string name="map_test">Map Test</string>
+    <string name="username">Username</string>
+    <string name="to_map">To Map</string>
+
 </resources>
