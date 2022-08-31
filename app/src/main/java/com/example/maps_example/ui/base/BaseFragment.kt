@@ -12,10 +12,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.maps_example.utils.Screens
 import kotlinx.coroutines.launch
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
 
-abstract class BaseFragment<BINDING : ViewDataBinding>(@LayoutRes private val layoutResId: Int) : Fragment() {
+abstract class BaseFragment<BINDING : ViewDataBinding>(@LayoutRes private val layoutResId: Int) : Fragment(), DIAware {
 
     abstract val viewModel: BaseViewModel
+    override val di: DI by closestDI()
     var binding: BINDING? = null
         private set
 

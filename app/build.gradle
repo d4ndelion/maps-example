@@ -48,8 +48,8 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.2'
 
     // kodein
-    implementation "org.kodein.di:kodein-di-framework-compose:7.12.0"
     implementation 'org.kodein.di:kodein-di:7.12.0'
+    implementation 'org.kodein.di:kodein-di-framework-android-x-viewmodel:7.7.0'
 
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.1"
