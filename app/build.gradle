@@ -13,8 +13,9 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "YANDEX_MAP_KIT_SDK_KEY", "\"d92cc341-e667-4723-a9bc-4226513f73a8\""
     }
 
     buildTypes {
@@ -54,4 +55,7 @@ dependencies {
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.1"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.1"
+
+    // yandex mapkit lite
+    implementation 'com.yandex.android:maps.mobile:4.2.0-lite'
 }
