@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.maps_example.utils.Screens
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.android.x.closestDI
@@ -26,7 +26,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(@LayoutRes private val la
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding?.lifecycleOwner = this.viewLifecycleOwner
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             receiveScreen(viewModel.screenChannel.receive())
         }
         return binding?.root
@@ -49,5 +49,13 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(@LayoutRes private val la
 
     private fun receiveScreen(screen: Screens?) {
         navigate(screen ?: return)
+    }
+
+    infix fun <T> Flow<T>.observe(consumer: (T) -> Unit) {
+        lifecycleScope.launchWhenStarted {
+            this@observe.collect {
+                consumer(it)
+            }
+        }
     }
 }
